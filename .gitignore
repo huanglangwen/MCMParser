@@ -1,4 +1,6 @@
 mechanism_files
+gen/*
+*.txt
 *.java
 *.tokens
 *.interp
