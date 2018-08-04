@@ -5,7 +5,8 @@ LPARA : '{' -> pushMode(INDMODE);
 NEWLINE : ('\r'? '\n')+ ;
 
 mode INDMODE;
-IND: [1-9][0-9]*'.'?;
+DOT: '.';
+IND: [1-9][0-9]*;
 RPARA: '}' -> mode(EQNMODE);
 
 mode EQNMODE;
@@ -14,7 +15,7 @@ STOI: [1-9][0-9]*;
 CHEMPLUS: '+';
 EQUAL: '=';
 COLON : ':' -> mode(RATEMODE);
-WSEQN: [ \t]+ -> channel(HIDDEN) ; 
+WSEQN: [ \t]+ -> channel(HIDDEN) ;
 
 mode RATEMODE;
 fragment DIGIT: [0-9];

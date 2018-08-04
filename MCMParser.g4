@@ -2,23 +2,22 @@ parser grammar MCMParser;
 options { tokenVocab=MCMLexer; }
 
 reactions: (reaction NEWLINE?)+;
-reaction: LPARA IND RPARA eqn COLON rate SEMICOLON;
+reaction: LPARA IND DOT? RPARA eqn COLON rate SEMICOLON;
 eqn: reactants EQUAL products;
 reactants: chemitem ( CHEMPLUS chemitem)* ;
 products: chemitem ( CHEMPLUS chemitem)* ;
-chemitem: CHEM #Chem
-        | STOI CHEM #StoiChem
-        ;
+chemitem: STOI? CHEM;
+
 rate: rate_expr;
-rate_expr: LP rate_expr RP
-         | <assoc=right> rate_expr POW rate_expr
-         | rate_expr op=(MULT | DIV ) rate_expr
-         | rate_expr op=(PLUS | MINUS) rate_expr
-         | MINUS rate_expr
-         | JVEC
-         | DOUBLE | FLOAT | INT
-         | VAR
-         | EXP LP rate_expr RP
+rate_expr: LP rate_expr RP #Parens
+         | <assoc=right> rate_expr POW rate_expr #Pow
+         | rate_expr op=(MULT | DIV ) rate_expr #MultDiv
+         | rate_expr op=(PLUS | MINUS) rate_expr #PlusMinus
+         | MINUS rate_expr #Negative
+         | JVEC #Jvec
+         | (DOUBLE | FLOAT | INT) #Num
+         | VAR #Var
+         | EXP LP rate_expr RP #Exp
          ;
 //num: DOUBLE | FLOAT | INT;
 //int_num: DIGIT+;
