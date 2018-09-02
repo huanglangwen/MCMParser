@@ -5,3 +5,4 @@ gen/*
 *.tokens
 *.interp
 *.class
+*.pyc

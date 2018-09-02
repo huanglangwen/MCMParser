@@ -1,7 +1,7 @@
 from antlr4 import FileStream,CommonTokenStream,ParseTreeWalker
-from MCMLexer import MCMLexer
-from MCMParser import MCMParser
-from EquationListener import EquationListener
+from gen.MCMLexer import MCMLexer
+from gen.MCMParser import MCMParser
+from visitors.EquationListener import EquationListener
 
 def main():
     mcm_file="./mechanism_files/MCM_APINENE.eqn.txt"
@@ -11,7 +11,9 @@ def main():
     parser=MCMParser(tokenstream)
     tree=parser.reactions()
     walker=ParseTreeWalker()
-    walker.walk(EquationListener(),tree)
+    listener=EquationListener()
+    walker.walk(listener,tree)
+    return listener
 
 if __name__=='__main__':
-    main()
+    listener=main()
