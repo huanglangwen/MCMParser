@@ -9,7 +9,7 @@ class EquationListener(MCMParserListener):
     def __init__(self):
         self.eqn_ind=0
         self.chem_ind=0
-        self.chemDict={}
+        #self.chemDict={}
         self.chemOrd={}
         self.mtxInd2Val={}  #num_eqn*num_chem, (eqn_ind,chem_ind)->val
         self.eqnSide=1  #Positive for Reactants, Negative for Productives
@@ -31,11 +31,12 @@ class EquationListener(MCMParserListener):
             stoi=int(ctx.STOI().getText())
         else:
             stoi=1
-        assert((chem in self.chemDict)==(chem in self.chemOrd))
-        if chem in self.chemDict:
-            self.chemDict[chem]+=stoi
-        else:
-            self.chemDict[chem]=stoi
+        #assert((chem in self.chemDict)==(chem in self.chemOrd))
+        #if chem in self.chemDict:
+        #    self.chemDict[chem]+=stoi
+        #else:
+        if not (chem in self.chemOrd):
+        #    self.chemDict[chem]=stoi
             self.chemOrd[chem]=self.chem_ind
             self.chem_ind+=1
         if not (self.eqn_ind, self.chemOrd[chem]) in self.mtxInd2Val:
