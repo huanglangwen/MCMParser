@@ -3,7 +3,7 @@ from gen.MCMLexer import MCMLexer
 from gen.MCMParser import MCMParser
 from visitors.EquationListener import EquationListener
 
-def main():
+def parseMCM():
     mcm_file="./mechanism_files/MCM_APINENE.eqn.txt"
     istream=FileStream(mcm_file)
     lexer=MCMLexer(istream)
@@ -16,4 +16,4 @@ def main():
     return listener
 
 if __name__=='__main__':
-    listener=main()
+    listener=parseMCM()
