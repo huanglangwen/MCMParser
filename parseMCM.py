@@ -1,7 +1,7 @@
 from antlr4 import FileStream,CommonTokenStream,ParseTreeWalker
-from gen.MCMLexer import MCMLexer
-from gen.MCMParser import MCMParser
-from visitors.EquationListener import EquationListener
+from MCMParser.gen.MCMLexer import MCMLexer
+from MCMParser.gen.MCMParser import MCMParser
+from MCMParser.visitors.EquationListener import EquationListener
 
 def parseMCM():
     mcm_file="./mechanism_files/MCM_APINENE.eqn.txt"

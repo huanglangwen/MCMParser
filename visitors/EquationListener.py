@@ -1,6 +1,6 @@
 from antlr4 import *
-from gen.MCMParserListener import MCMParserListener
-from gen.MCMParser import MCMParser
+from ..gen.MCMParserListener import MCMParserListener
+from ..gen.MCMParser import MCMParser
 import scipy.sparse as sparse
 import numpy as np
 import sys
@@ -16,6 +16,8 @@ class EquationListener(MCMParserListener):
         self.stoich_spmtx=None
         self.maxNumReactants=0#Across all equations
         self.numReactants=0
+        self.num_eqns=0
+        self.num_chems=0
 
     def enterReaction(self, ctx:MCMParser.ReactionContext):
         self.eqn_ind= int(ctx.IND().getText()) - 1# ZERO INDEXED
@@ -54,10 +56,10 @@ class EquationListener(MCMParserListener):
         self.mtxInd2Val[(self.eqn_ind, self.chemOrd[chem])]+= self.eqnSide * stoi
 
     def exitReactions(self, ctx:MCMParser.ReactionsContext):
-        num_eqn=self.eqn_ind+1
-        num_chem=self.chem_ind
+        self.num_eqns=self.eqn_ind+1
+        self.num_chems=self.chem_ind
         print("Generating Sparse matrix",file=sys.stderr)
-        self.stoich_spmtx=sparse.dok_matrix((num_eqn, num_chem), np.int8)
+        self.stoich_spmtx=sparse.dok_matrix((self.num_eqns, self.num_chems), np.int8)
         for (eqn_ind,chem_ind) in self.mtxInd2Val:
             val=self.mtxInd2Val[(eqn_ind,chem_ind)]
             self.stoich_spmtx[eqn_ind, chem_ind]=val
